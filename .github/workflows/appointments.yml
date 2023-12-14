@@ -31,11 +31,11 @@ jobs:
         context: ./appointments
         file: ./appointments/Dockerfile
         push: true
-        tags: fatimaj/appointments:${{ github.sha }}
+        tags: fatimaj/appointment:${{ github.sha }}
 
     - name: Update docker-compose.yml
       run: |
-        sed -i 's|fatimaj/appointments:.*|fatimaj/appointments:${{ github.sha }}|' docker-compose.yml
+        sed -i 's|fatimaj/appointment:.*|fatimaj/appointment:${{ github.sha }}|' docker-compose.yml
 
     - name: Commit and push if changed
       run: |
