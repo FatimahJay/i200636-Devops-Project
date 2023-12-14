@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  appointments:
+    image: fatimaj/appointments
+    build: ./appointments
+    ports:
+      - "7070:7070"
+    environment:
+      - FLASK_ENV=development
+    networks:
+      - app-network
+
+  doctors:
+    image: fatimaj/doctors
+    build: ./doctors
+    ports:
+      - "9090:9090"
+    environment:
+      - FLASK_ENV=development
+    networks:
+      - app-network
+
+  frontend:
+    image: fatimaj/frontend
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - DOCTORS_SERVICE_URL=doctors:9090
+      - APPOINTMENTS_SERVICE_URL=appointments:7070
+    depends_on:
+      - appointments
+      - doctors
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+    volumes:
+      - mongo-data:/data/db
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+
