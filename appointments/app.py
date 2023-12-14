@@ -9,7 +9,7 @@ appointments = [
   { 'id': "5",'doctor': "2", 'date': "22 Nov 2023", 'rating':"Good"  },
 ]
 
-#added a comment for testing CI/CD
+#added a comment for testing CI/CD flow of appointments
 
 @app.route('/hello')
 def hello():
