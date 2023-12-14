@@ -35,7 +35,7 @@ jobs:
 
     - name: Update docker-compose.yml
       run: |
-        sed -i 's|fatimaj/frontend-service:.*|fatimaj/frontend:${{ github.sha }}|' docker-compose.yml
+        sed -i 's|fatimaj/frontend:.*|fatimaj/frontend:${{ github.sha }}|' docker-compose.yml
 
     - name: Commit and push if changed
       run: |
