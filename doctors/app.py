@@ -22,3 +22,5 @@ def getDoctor(id):
 
 if __name__ == "__main__":
   app.run(host="0.0.0.0",port=9090)
+
+#added comment to doctors to test CI/CD workflow for doctors
