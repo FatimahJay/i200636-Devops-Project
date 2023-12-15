@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: appointments
+  name: appointment
 type: Opaque
 data:
-  mongo-uri: aq9uZ8zxmqovLmkvbmdvLXNlopehYjKmyjcwPwD= # Encoded MongoDB URI
-  NAME: GhX2is== # Encoded NAME
-  PASSWORD: YsHbkMf3 # Encoded PASSWORD
+  mongo-uri: bW9uZ29kYjovL21vbmdvLXNlcnZpY2U6MjcwMTc= # Encoded MongoDB URI
+  NAME: YW1uYQ== # Encoded NAME
+  PASSWORD: MTIzNDU2 # Encoded PASSWORD
 
 ---
 
@@ -54,7 +54,7 @@ spec:
         - name: MONGO_DB_NAME
           valueFrom:
             configMapKeyRef:
-              name: appointment-config
+              name: appointments-config
               key: MONGO_DB_NAME
         - name: NAME
           valueFrom:
