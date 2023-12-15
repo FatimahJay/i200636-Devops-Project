@@ -1,0 +1,96 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: appointments
+type: Opaque
+data:
+  mongo-uri: aq9uZ8zxmqovLmkvbmdvLXNlopehYjKmyjcwPwD= # Encoded MongoDB URI
+  NAME: GhX2is== # Encoded NAME
+  PASSWORD: YsHbkMf3 # Encoded PASSWORD
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: appointments-config
+data:
+  MONGO_DB_NAME: "appointments_database"
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appointments-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: appointments
+  template:
+    metadata:
+      labels:
+        app: appointments
+    spec:
+      containers:
+      - name: appointments
+        image: fatimaj/appointment:latest 
+        ports:
+        - containerPort: 7070
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        env:
+        - name: MONGO_URI
+          valueFrom:
+            secretKeyRef:
+              name: appointment
+              key: mongo-uri
+        - name: MONGO_DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: appointment-config
+              key: MONGO_DB_NAME
+        - name: NAME
+          valueFrom:
+            secretKeyRef:
+              name: appointment
+              key: NAME
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: appointment
+              key: PASSWORD
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 7070
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 7070
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          failureThreshold: 2
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: appointments
+spec:
+  selector:
+    app: appointments
+  ports:
+    - protocol: TCP
+      port: 7070
+      targetPort: 7070

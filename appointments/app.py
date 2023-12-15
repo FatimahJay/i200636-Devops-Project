@@ -20,6 +20,14 @@ def hello():
 def getAppointments():
   return jsonify(appointments)
 
+@app.route('/health', methods=['GET'])
+def health_check():
+    return 'OK', 200
+
+@app.route('/ready', methods=['GET'])
+def health_check():
+    return 'OK', 200
+
 @app.route('/appointment/<id>', methods=["GET"])
 def getAppointment(id):
   id = int(id) - 1
