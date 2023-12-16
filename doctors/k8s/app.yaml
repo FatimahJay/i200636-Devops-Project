@@ -28,7 +28,7 @@ spec:
           name: doctors
       containers:
       - name: doctors
-        image: fatimaj/doctors:latest 
+        image: fatimaj/doctors:282c2bef934feea9db24f743f74ec83d1d9d5b62
         ports:
         - containerPort: 9090
         resources:

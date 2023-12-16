@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: fatimaj/frontend:latest 
+        image: fatimaj/frontend:282c2bef934feea9db24f743f74ec83d1d9d5b62 
         ports:
         - containerPort: 3000
         env:
